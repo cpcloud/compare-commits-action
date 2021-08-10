@@ -3,9 +3,11 @@ import * as core from "@actions/core";
 
 async function run(): Promise<void> {
   try {
+    core.info("FOO");
     const octokit = new Octokit({
       auth: core.getInput("token"),
     });
+    core.info("BAR");
 
     const owner = core.getInput("owner");
     const repo = core.getInput("repo");
