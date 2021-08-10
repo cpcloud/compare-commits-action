@@ -46,10 +46,9 @@ async function run(): Promise<void> {
       }
     }
 
-    core.setOutput(
-      "differences",
-      headerLines.concat(lines.reverse()).join("\n")
-    );
+    const joinedLines = headerLines.concat(lines.reverse()).join("\n");
+    core.debug(joinedLines);
+    core.setOutput("differences", joinedLines);
   } catch (error) {
     core.setFailed(error.message);
   }
