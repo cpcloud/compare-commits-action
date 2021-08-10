@@ -47,7 +47,8 @@ async function run(): Promise<void> {
     }
 
     const joinedLines = headerLines.concat(lines.reverse()).join("\n");
-    core.debug(joinedLines);
+    core.info("Hello world!");
+    core.info(joinedLines);
     core.setOutput("differences", joinedLines);
   } catch (error) {
     core.setFailed(error.message);
