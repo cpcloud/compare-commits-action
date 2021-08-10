@@ -1,11 +1,30 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "compare-commits-action"
+description: "Compare differences between two commits in a repository"
+author: "Phillip Cloud"
 inputs:
-  milliseconds: # change this
+  owner:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: "The owner of the GitHub repository"
+  repo:
+    required: true
+    description: "The GitHub repository name"
+  basehead:
+    required: true
+    description: "The commit range to compare"
+  token:
+    required: false
+    description: "Access token to increase the rate limit for GitHub API requests, recommended"
+  show-merge-commits:
+    required: false
+    description: "Whether to show merge commits in the log"
+    default: "false"
+  sha-length:
+    required: false
+    description: "The short length of the SHA256 displayed in the output table"
+    default: "8"
+outputs:
+  differences:
+    description: "A markdown formatted table of differences between two commits"
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
