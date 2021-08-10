@@ -15,11 +15,32 @@ jobs:
       - run: npm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        show_differences:
+          - true
+          - false
+        show_merge_commits:
+          - true
+          - false
+        sha_length:
+          - 8
+          - 10
+        repo:
+          - owner: NixOS
+            repo: nixpkgs
+            basehead: cc455c004a60e1d65a0fb86ad6cc76168c6bb4d5...67c80531be622641b5b2ccc3a7aff355cb02476b
+          - owner: nix-community
+            repo: home-manager
+            basehead: b0d769691cc379c9ab91d3acec5d14e75c02c02b...59be1f4983ee3689de3172716a6c7e95a6a37bb7
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          owner: NixOS
-          repo: nixpkgs
-          basehead: cc455c004a60e1d65a0fb86ad6cc76168c6bb4d5...67c80531be622641b5b2ccc3a7aff355cb02476b
+          owner: ${{ matrix.repo.owner }}
+          repo: ${{ matrix.repo.repo }}
+          basehead: ${{ matrix.repo.basehead }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          show-differences: ${{ matrix.show_differences }}
+          show-merge-commits: ${{ matrix.show_merge_commits }}
+          sha-length: ${{ matrix.sha_length }}
