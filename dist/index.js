@@ -5208,6 +5208,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const rest_1 = __nccwpck_require__(375);
 const core = __nccwpck_require__(186);
 async function run() {
+    var _a;
     try {
         const octokit = new rest_1.Octokit({
             auth: core.getInput("token"),
@@ -5228,7 +5229,7 @@ async function run() {
             for (const { sha, html_url: shaUrl, commit: { message, committer }, } of commits.filter(c => showMergeCommits || c.parents.length < 2)) {
                 const sha256 = sha.slice(0, shaLength);
                 const commitMessage = message.split("\n")[0];
-                const date = committer?.date ?? "unknown";
+                const date = (_a = committer === null || committer === void 0 ? void 0 : committer.date) !== null && _a !== void 0 ? _a : "unknown";
                 const fields = [
                     `[\`${sha256}\`](${shaUrl})`,
                     `\`${commitMessage}\``,
