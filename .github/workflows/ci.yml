@@ -1,10 +1,8 @@
 name: "Continuous Integration"
-on: # rebuild any PRs and main branch changes
-  pull_request:
+on:
   push:
     branches:
       - main
-      - "releases/*"
 
 jobs:
   build:
@@ -44,3 +42,20 @@ jobs:
           show-differences: ${{ matrix.show_differences }}
           show-merge-commits: ${{ matrix.show_merge_commits }}
           sha-length: ${{ matrix.sha_length }}
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
