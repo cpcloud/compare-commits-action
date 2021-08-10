@@ -3,11 +3,9 @@ import * as core from "@actions/core";
 
 async function run(): Promise<void> {
   try {
-    core.info("FOO");
     const octokit = new Octokit({
       auth: core.getInput("token"),
     });
-    core.info("BAR");
 
     const owner = core.getInput("owner");
     const repo = core.getInput("repo");
@@ -20,6 +18,9 @@ async function run(): Promise<void> {
     const shaLength: number = JSON.parse(core.getInput("sha-length"));
     const showMergeCommits: boolean = JSON.parse(
       core.getInput("show-merge-commits")
+    );
+    const showDifferences: boolean = JSON.parse(
+      core.getInput("show-differences")
     );
 
     const lines = [];
@@ -49,8 +50,13 @@ async function run(): Promise<void> {
     }
 
     const joinedLines = headerLines.concat(lines.reverse()).join("\n");
-    core.info("Hello world!");
-    core.info(joinedLines);
+
+    if (showDifferences) {
+      core.startGroup("Show the markdown output");
+      core.info(joinedLines);
+      core.endGroup();
+    }
+
     core.setOutput("differences", joinedLines);
   } catch (error) {
     core.setFailed(error.message);

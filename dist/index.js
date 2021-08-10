@@ -5210,11 +5210,9 @@ const core = __nccwpck_require__(186);
 async function run() {
     var _a;
     try {
-        core.info("FOO");
         const octokit = new rest_1.Octokit({
             auth: core.getInput("token"),
         });
-        core.info("BAR");
         const owner = core.getInput("owner");
         const repo = core.getInput("repo");
         const basehead = core.getInput("basehead");
@@ -5224,6 +5222,7 @@ async function run() {
         const headerLines = [headerLine, headerSepLine];
         const shaLength = JSON.parse(core.getInput("sha-length"));
         const showMergeCommits = JSON.parse(core.getInput("show-merge-commits"));
+        const showDifferences = JSON.parse(core.getInput("show-differences"));
         const lines = [];
         for await (const { data: { commits }, } of octokit.paginate.iterator(octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
         { owner, repo, basehead } // eslint-disable-line indent
@@ -5241,8 +5240,11 @@ async function run() {
             }
         }
         const joinedLines = headerLines.concat(lines.reverse()).join("\n");
-        core.info("Hello world!");
-        core.info(joinedLines);
+        if (showDifferences) {
+            core.startGroup("Show the markdown output");
+            core.info(joinedLines);
+            core.endGroup();
+        }
         core.setOutput("differences", joinedLines);
     }
     catch (error) {

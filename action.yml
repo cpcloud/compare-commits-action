@@ -22,6 +22,10 @@ inputs:
     required: false
     description: "The short length of the SHA256 displayed in the output table"
     default: "8"
+  show-differences:
+    required: false
+    description: "Print the generated Markdown table to the console"
+    default: "false"
 outputs:
   differences:
     description: "A markdown formatted table of differences between two commits"
