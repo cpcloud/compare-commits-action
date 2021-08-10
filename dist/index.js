@@ -5210,9 +5210,11 @@ const core = __nccwpck_require__(186);
 async function run() {
     var _a;
     try {
+        core.info("FOO");
         const octokit = new rest_1.Octokit({
             auth: core.getInput("token"),
         });
+        core.info("BAR");
         const owner = core.getInput("owner");
         const repo = core.getInput("repo");
         const basehead = core.getInput("basehead");
@@ -5238,7 +5240,10 @@ async function run() {
                 lines.push(`|${fields.join("|")}|`);
             }
         }
-        core.setOutput("differences", headerLines.concat(lines.reverse()).join("\n"));
+        const joinedLines = headerLines.concat(lines.reverse()).join("\n");
+        core.info("Hello world!");
+        core.info(joinedLines);
+        core.setOutput("differences", joinedLines);
     }
     catch (error) {
         core.setFailed(error.message);
