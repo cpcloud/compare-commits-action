@@ -21,9 +21,6 @@ jobs:
         show_merge_commits:
           - true
           - false
-        sha_length:
-          - 8
-          - 10
         repo:
           - owner: NixOS
             repo: nixpkgs
@@ -41,7 +38,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           show-differences: ${{ matrix.show_differences }}
           show-merge-commits: ${{ matrix.show_merge_commits }}
-          sha-length: ${{ matrix.sha_length }}
   release:
     runs-on: ubuntu-latest
     needs: [build, test]
