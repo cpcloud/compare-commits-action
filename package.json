@@ -26,7 +26,7 @@
     "octokit"
   ],
   "author": "Phillip Cloud <417981+cpcloud@users.noreply.github.com>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.4.0",
     "@octokit/rest": "^18.9.0"
