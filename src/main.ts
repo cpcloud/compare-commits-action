@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import * as core from "@actions/core";
+import { markdownTable } from "markdown-table";
 
 async function run(): Promise<void> {
   try {
@@ -10,16 +11,11 @@ async function run(): Promise<void> {
     const owner = core.getInput("owner");
     const repo = core.getInput("repo");
     const basehead = core.getInput("basehead");
-
-    const header = ["SHA256", "Commit Message", "Timestamp"];
-    const headerLine = `|${header.join("|")}|`;
-    const headerSepLine = `|${new Array(header.length).fill("---").join("|")}|`;
-    const headerLines = [headerLine, headerSepLine];
-    const shaLength: number = JSON.parse(core.getInput("sha-length"));
-    const showMergeCommits: boolean = JSON.parse(
+    const shaLength = JSON.parse<number>(core.getInput("sha-length"));
+    const showMergeCommits = JSON.parse<boolean>(
       core.getInput("show-merge-commits")
     );
-    const showDifferences: boolean = JSON.parse(
+    const showDifferences = JSON.parse<boolean>(
       core.getInput("show-differences")
     );
 
@@ -31,33 +27,33 @@ async function run(): Promise<void> {
       octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
       { owner, repo, basehead } // eslint-disable-line indent
     )) /* eslint-disable-line indent */ {
-      for (const {
-        sha,
-        html_url: shaUrl,
-        commit: { message, committer },
-      } of commits.filter(c => showMergeCommits || c.parents.length < 2)) {
-        const sha256 = sha.slice(0, shaLength);
-        const commitMessage = message.split("\n")[0];
-        const date = committer?.date ?? "unknown";
+      lines.push(
+        ...commits
+          .filter(c => showMergeCommits || c.parents.length < 2)
+          .map(({ sha, html_url: shaUrl, commit: { message, committer } }) => {
+            const sha256 = sha.slice(0, shaLength);
+            const commitMessage = message.split("\n")[0];
+            const date = committer?.date ?? "unknown";
 
-        const fields = [
-          `[\`${sha256}\`](${shaUrl})`,
-          `\`${commitMessage}\``,
-          `\`${date.replace("T", " ")}\``,
-        ];
-        lines.push(`|${fields.join("|")}|`);
-      }
+            return [
+              `[\`${sha256}\`](${shaUrl})`,
+              `\`${commitMessage}\``,
+              `\`${date.replace("T", " ")}\``,
+            ];
+          })
+      );
     }
 
-    const joinedLines = headerLines.concat(lines.reverse()).join("\n");
+    const headerLines = [["SHA256", "Commit Message", "Timestamp"]];
+    const table = markdownTable(headerLines.concat(lines.reverse()));
 
     if (showDifferences) {
       core.startGroup("Show the markdown output");
-      core.info(joinedLines);
+      core.info(table);
       core.endGroup();
     }
 
-    core.setOutput("differences", joinedLines);
+    core.setOutput("differences", table);
   } catch (error) {
     core.setFailed(error.message);
   }
