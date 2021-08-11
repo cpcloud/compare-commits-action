@@ -1,5 +1,28 @@
 # Compare the Differences Between Two Commits
 
+This action will compare the differences in a commit range and generate a Markdown table that looks like this:
+
+| SHA256                                                                                                      | Commit Message                    | Timestamp              |
+| ----------------------------------------------------------------------------------------------------------- | --------------------------------- | ---------------------- |
+| [`c049a09d`](https://github.com/nix-community/home-manager/commit/c049a09d1aa74e78d84cbb76a84a0218956650a6) | `easyeffects: add module (#2182)` | `2021-08-11 15:21:43Z` |
+
+## Usage in a GitHub workflow
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare commits
+        uses: cpcloud/compare-commits-action@v2.0.4
+        with:
+          owner: nix-community
+          repo: home-manager
+          basehead: A...B
+          token: ${{ secrets.GITHUB_TOKEN }}
+          verbose: true  # this will print the markdown table to the console
+```
+
 ## Inputs
 
 ```yaml
