@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        show_differences:
+        verbose:
           - true
           - false
         show_merge_commits:
@@ -42,7 +42,7 @@ jobs:
           repo: ${{ matrix.repo.repo }}
           basehead: ${{ matrix.repo.basehead }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          show-differences: ${{ matrix.show_differences }}
+          verbose: ${{ matrix.verbose }}
           show-merge-commits: ${{ matrix.show_merge_commits }}
   release:
     runs-on: ubuntu-latest
