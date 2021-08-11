@@ -5515,7 +5515,7 @@ async function run() {
         const basehead = core.getInput("basehead");
         const shaLength = JSON.parse(core.getInput("sha-length"));
         const showMergeCommits = JSON.parse(core.getInput("show-merge-commits"));
-        const showDifferences = JSON.parse(core.getInput("show-differences"));
+        const verbose = JSON.parse(core.getInput("verbose"));
         const lines = [];
         for await (const { data: { commits }, } of octokit.paginate.iterator(octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
         { owner, repo, basehead } // eslint-disable-line indent
@@ -5536,7 +5536,7 @@ async function run() {
         }
         const headerLines = [["SHA256", "Commit Message", "Timestamp"]];
         const table = markdown_table_1.markdownTable(headerLines.concat(lines.reverse()));
-        if (showDifferences) {
+        if (verbose) {
             core.startGroup("Show the markdown output");
             core.info(table);
             core.endGroup();

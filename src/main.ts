@@ -15,9 +15,7 @@ async function run(): Promise<void> {
     const showMergeCommits: boolean = JSON.parse(
       core.getInput("show-merge-commits")
     );
-    const showDifferences: boolean = JSON.parse(
-      core.getInput("show-differences")
-    );
+    const verbose: boolean = JSON.parse(core.getInput("verbose"));
 
     const lines = [];
 
@@ -47,7 +45,7 @@ async function run(): Promise<void> {
     const headerLines = [["SHA256", "Commit Message", "Timestamp"]];
     const table = markdownTable(headerLines.concat(lines.reverse()));
 
-    if (showDifferences) {
+    if (verbose) {
       core.startGroup("Show the markdown output");
       core.info(table);
       core.endGroup();
