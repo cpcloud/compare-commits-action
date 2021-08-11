@@ -1,6 +1,6 @@
 {
   "name": "compare-commits-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Compare the differences between two commits",
   "main": "lib/main.js",
@@ -32,6 +32,8 @@
     "@octokit/rest": "^18.9.0"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
     "@types/eslint": "^7.28.0",
     "@types/node": "^16.4.13",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
@@ -47,6 +49,10 @@
   "release": {
     "branches": [
       "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/git"
     ]
   }
 }
