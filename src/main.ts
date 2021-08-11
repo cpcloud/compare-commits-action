@@ -1,5 +1,5 @@
-import { Octokit } from "@octokit/rest";
 import * as core from "@actions/core";
+import { Octokit } from "@octokit/rest";
 import { markdownTable } from "markdown-table";
 
 async function run(): Promise<void> {
