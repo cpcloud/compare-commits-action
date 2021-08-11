@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/cpcloud/compare-commits-action/compare/v2.0.0...v2.0.1) (2021-08-11)
+
+
+### Bug Fixes
+
+* lint fixes ([95b92fb](https://github.com/cpcloud/compare-commits-action/commit/95b92fbac27b7c6c643b1fc36db0504615a05e5f))
+
 # [2.0.0](https://github.com/cpcloud/compare-commits-action/compare/v1.0.5...v2.0.0) (2021-08-11)
 
 
