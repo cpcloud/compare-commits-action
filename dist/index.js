@@ -5537,7 +5537,7 @@ async function run() {
         const headerLines = [["SHA256", "Commit Message", "Timestamp"]];
         const table = markdown_table_1.markdownTable(headerLines.concat(lines.reverse()));
         if (verbose) {
-            core.startGroup("Show the markdown output");
+            core.startGroup("Show the markdown output"); // eslint-disable-line i18n-text/no-en
             core.info(table);
             core.endGroup();
         }
