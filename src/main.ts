@@ -46,7 +46,7 @@ async function run(): Promise<void> {
     const table = markdownTable(headerLines.concat(lines.reverse()));
 
     if (verbose) {
-      core.startGroup("Show the markdown output");
+      core.startGroup("Show the markdown output"); // eslint-disable-line i18n-text/no-en
       core.info(table);
       core.endGroup();
     }
