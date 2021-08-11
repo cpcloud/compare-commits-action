@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/cpcloud/compare-commits-action/compare/v1.0.4...v1.0.5) (2021-08-11)
+
+
+### Bug Fixes
+
+* fix type annotations ([1d0efd6](https://github.com/cpcloud/compare-commits-action/commit/1d0efd6eef48c908abeb3d4ebbff0f66560e49c8))
+
 ## [1.0.4](https://github.com/cpcloud/compare-commits-action/compare/v1.0.3...v1.0.4) (2021-08-11)
 
 
