@@ -11,11 +11,11 @@ async function run(): Promise<void> {
     const owner = core.getInput("owner");
     const repo = core.getInput("repo");
     const basehead = core.getInput("basehead");
-    const shaLength = JSON.parse<number>(core.getInput("sha-length"));
-    const showMergeCommits = JSON.parse<boolean>(
+    const shaLength: number = JSON.parse(core.getInput("sha-length"));
+    const showMergeCommits: boolean = JSON.parse(
       core.getInput("show-merge-commits")
     );
-    const showDifferences = JSON.parse<boolean>(
+    const showDifferences: boolean = JSON.parse(
       core.getInput("show-differences")
     );
 
