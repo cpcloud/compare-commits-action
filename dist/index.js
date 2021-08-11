@@ -5502,8 +5502,8 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const rest_1 = __nccwpck_require__(375);
 const core = __nccwpck_require__(186);
+const rest_1 = __nccwpck_require__(375);
 const markdown_table_1 = __nccwpck_require__(62);
 async function run() {
     try {
