@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/cpcloud/compare-commits-action/compare/v1.0.5...v2.0.0) (2021-08-11)
+
+
+### Code Refactoring
+
+* rename show-differences to verbose ([536c7d9](https://github.com/cpcloud/compare-commits-action/commit/536c7d99c9b8396595b653a296eb02f94413535e))
+
+
+### BREAKING CHANGES
+
+* The show-differences field was renamed to verbose
+
 ## [1.0.5](https://github.com/cpcloud/compare-commits-action/compare/v1.0.4...v1.0.5) (2021-08-11)
 
 
