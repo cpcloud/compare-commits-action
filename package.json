@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.4.0",
-    "@octokit/rest": "^18.9.0",
+    "@octokit/rest": "^18.9.1",
     "markdown-table": "^3.0.1"
   },
   "devDependencies": {
