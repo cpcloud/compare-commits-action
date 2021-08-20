@@ -28,7 +28,7 @@
   "author": "Phillip Cloud <417981+cpcloud@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.4.0",
+    "@actions/core": "^1.5.0",
     "@octokit/rest": "^18.9.1",
     "markdown-table": "^3.0.1"
   },
