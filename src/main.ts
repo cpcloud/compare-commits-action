@@ -17,29 +17,34 @@ interface TableOptions {
 async function* generateTableLines(
   octokit: Octokit,
   { owner, repo, basehead, includeMergeCommits, shaLength }: TableOptions
-): AsyncIterable<string[]> {
+): AsyncIterable<[string, string, string]> {
   // yield the header
-  yield ["SHA256", "Commit Message", "Timestamp"];
   for await (const {
     data: { commits },
   } of octokit.paginate.iterator(
     octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
     { owner, repo, basehead } // eslint-disable-line indent
   )) /* eslint-disable-line indent */ {
-    yield* commits
-      .filter(c => includeMergeCommits || c.parents.length < 2)
-      .map(({ sha, html_url: shaUrl, commit: { message, committer } }) => {
+    for (const {
+      sha,
+      html_url: shaUrl,
+      parents,
+      commit: { message, committer },
+    } of commits) {
+      if (includeMergeCommits || parents.length < 2) {
         const sha256 = sha.slice(0, shaLength);
         const commitMessage = message.split("\n")[0];
         const date = committer?.date ?? "unknown";
 
-        return [
+        yield [
           `[\`${sha256}\`](${shaUrl})`,
           `\`${commitMessage}\``,
           `\`${date.replace("T", " ")}\``,
         ];
-      });
+      }
+    }
   }
+  yield ["SHA256", "Commit Message", "Timestamp"];
 }
 
 /**
