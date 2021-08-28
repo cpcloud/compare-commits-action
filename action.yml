@@ -14,6 +14,7 @@ inputs:
   token:
     required: false
     description: "Access token to increase the rate limit for GitHub API requests"
+    default: "${{ github.token }}"
   include-merge-commits:
     required: false
     description: "Whether to show merge commits in the log"
