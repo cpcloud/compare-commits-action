@@ -134,7 +134,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
+exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
 const command_1 = __nccwpck_require__(351);
 const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(278);
@@ -312,19 +312,30 @@ exports.debug = debug;
 /**
  * Adds an error issue
  * @param message error issue message. Errors will be converted to string via toString()
+ * @param properties optional properties to add to the annotation.
  */
-function error(message) {
-    command_1.issue('error', message instanceof Error ? message.toString() : message);
+function error(message, properties = {}) {
+    command_1.issueCommand('error', utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
 exports.error = error;
 /**
- * Adds an warning issue
+ * Adds a warning issue
  * @param message warning issue message. Errors will be converted to string via toString()
+ * @param properties optional properties to add to the annotation.
  */
-function warning(message) {
-    command_1.issue('warning', message instanceof Error ? message.toString() : message);
+function warning(message, properties = {}) {
+    command_1.issueCommand('warning', utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
 exports.warning = warning;
+/**
+ * Adds a notice issue
+ * @param message notice issue message. Errors will be converted to string via toString()
+ * @param properties optional properties to add to the annotation.
+ */
+function notice(message, properties = {}) {
+    command_1.issueCommand('notice', utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
+}
+exports.notice = notice;
 /**
  * Writes info to log with console.log.
  * @param message info message
@@ -458,7 +469,7 @@ exports.issueCommand = issueCommand;
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toCommandValue = void 0;
+exports.toCommandProperties = exports.toCommandValue = void 0;
 /**
  * Sanitizes an input into a string so it can be passed into issueCommand safely
  * @param input input to sanitize into a string
@@ -473,6 +484,25 @@ function toCommandValue(input) {
     return JSON.stringify(input);
 }
 exports.toCommandValue = toCommandValue;
+/**
+ *
+ * @param annotationProperties
+ * @returns The command properties to send with the actual annotation command
+ * See IssueCommandProperties: https://github.com/actions/runner/blob/main/src/Runner.Worker/ActionCommandManager.cs#L646
+ */
+function toCommandProperties(annotationProperties) {
+    if (!Object.keys(annotationProperties).length) {
+        return {};
+    }
+    return {
+        title: annotationProperties.title,
+        line: annotationProperties.startLine,
+        endLine: annotationProperties.endLine,
+        col: annotationProperties.startColumn,
+        endColumn: annotationProperties.endColumn
+    };
+}
+exports.toCommandProperties = toCommandProperties;
 //# sourceMappingURL=utils.js.map
 
 /***/ }),
@@ -1127,18 +1157,22 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var request = __nccwpck_require__(234);
 var universalUserAgent = __nccwpck_require__(30);
 
-const VERSION = "4.6.4";
+const VERSION = "4.7.0";
 
-class GraphqlError extends Error {
-  constructor(request, response) {
-    const message = response.data.errors[0].message;
-    super(message);
-    Object.assign(this, response.data);
-    Object.assign(this, {
-      headers: response.headers
-    });
-    this.name = "GraphqlError";
-    this.request = request; // Maintains proper stack trace (only available on V8)
+function _buildMessageForResponseErrors(data) {
+  return `Request failed due to following response errors:\n` + data.errors.map(e => ` - ${e.message}`).join("\n");
+}
+
+class GraphqlResponseError extends Error {
+  constructor(request, headers, response) {
+    super(_buildMessageForResponseErrors(response));
+    this.request = request;
+    this.headers = headers;
+    this.response = response;
+    this.name = "GraphqlResponseError"; // Expose the errors and response data in their shorthand properties.
+
+    this.errors = response.errors;
+    this.data = response.data; // Maintains proper stack trace (only available on V8)
 
     /* istanbul ignore next */
 
@@ -1196,10 +1230,7 @@ function graphql(request, query, options) {
         headers[key] = response.headers[key];
       }
 
-      throw new GraphqlError(requestOptions, {
-        headers,
-        data: response.data
-      });
+      throw new GraphqlResponseError(requestOptions, headers, response.data);
     }
 
     return response.data.data;
@@ -1233,6 +1264,7 @@ function withCustomRequest(customRequest) {
   });
 }
 
+exports.GraphqlResponseError = GraphqlResponseError;
 exports.graphql = graphql$1;
 exports.withCustomRequest = withCustomRequest;
 //# sourceMappingURL=index.js.map
@@ -1248,7 +1280,7 @@ exports.withCustomRequest = withCustomRequest;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-const VERSION = "2.15.0";
+const VERSION = "2.15.1";
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -2668,7 +2700,7 @@ const Endpoints = {
   }
 };
 
-const VERSION = "5.7.0";
+const VERSION = "5.8.0";
 
 function endpointsToMethods(octokit, endpointsMap) {
   const newMethods = {};
@@ -2871,7 +2903,7 @@ var isPlainObject = __nccwpck_require__(287);
 var nodeFetch = _interopDefault(__nccwpck_require__(467));
 var requestError = __nccwpck_require__(537);
 
-const VERSION = "5.6.0";
+const VERSION = "5.6.1";
 
 function getBufferResponse(response) {
   return response.arrayBuffer();
@@ -3053,7 +3085,7 @@ var pluginRequestLog = __nccwpck_require__(883);
 var pluginPaginateRest = __nccwpck_require__(193);
 var pluginRestEndpointMethods = __nccwpck_require__(44);
 
-const VERSION = "18.9.0";
+const VERSION = "18.9.1";
 
 const Octokit = core.Octokit.plugin(pluginRequestLog.requestLog, pluginRestEndpointMethods.legacyRestEndpointMethods, pluginPaginateRest.paginateRest).defaults({
   userAgent: `octokit-rest.js/${VERSION}`
@@ -5505,46 +5537,71 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __nccwpck_require__(186);
 const rest_1 = __nccwpck_require__(375);
 const markdown_table_1 = __nccwpck_require__(62);
+/**
+ * Generator a markdown table of commits between a range
+ * @param octokit A GitHub API instance
+ */
+async function* generateTableLines(octokit, { owner, repo, basehead, includeMergeCommits, shaLength }) {
+    // yield the header
+    yield ["SHA256", "Commit Message", "Timestamp"];
+    for await (const { data: { commits }, } of octokit.paginate.iterator(octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
+    { owner, repo, basehead } // eslint-disable-line indent
+    )) /* eslint-disable-line indent */ {
+        yield* commits
+            .filter(c => includeMergeCommits || c.parents.length < 2)
+            .map(({ sha, html_url: shaUrl, commit: { message, committer } }) => {
+            var _a;
+            const sha256 = sha.slice(0, shaLength);
+            const commitMessage = message.split("\n")[0];
+            const date = (_a = committer === null || committer === void 0 ? void 0 : committer.date) !== null && _a !== void 0 ? _a : "unknown";
+            return [
+                `[\`${sha256}\`](${shaUrl})`,
+                `\`${commitMessage}\``,
+                `\`${date.replace("T", " ")}\``,
+            ];
+        });
+    }
+}
+/**
+ * Convert an asynchronous generator to an array.
+ *
+ * @param generator An async generator
+ */
+async function generatorToArray(generator) {
+    const values = [];
+    for await (const value of generator) {
+        values.push(value);
+    }
+    return values;
+}
 async function run() {
     try {
         const octokit = new rest_1.Octokit({
-            auth: core.getInput("token"),
+            auth: core.getInput("token", { required: false }),
         });
-        const owner = core.getInput("owner");
-        const repo = core.getInput("repo");
-        const basehead = core.getInput("basehead");
-        const shaLength = JSON.parse(core.getInput("sha-length"));
-        const showMergeCommits = JSON.parse(core.getInput("show-merge-commits"));
-        const verbose = JSON.parse(core.getInput("verbose"));
-        const lines = [];
-        for await (const { data: { commits }, } of octokit.paginate.iterator(octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
-        { owner, repo, basehead } // eslint-disable-line indent
-        )) /* eslint-disable-line indent */ {
-            lines.push(...commits
-                .filter(c => showMergeCommits || c.parents.length < 2)
-                .map(({ sha, html_url: shaUrl, commit: { message, committer } }) => {
-                var _a;
-                const sha256 = sha.slice(0, shaLength);
-                const commitMessage = message.split("\n")[0];
-                const date = (_a = committer === null || committer === void 0 ? void 0 : committer.date) !== null && _a !== void 0 ? _a : "unknown";
-                return [
-                    `[\`${sha256}\`](${shaUrl})`,
-                    `\`${commitMessage}\``,
-                    `\`${date.replace("T", " ")}\``,
-                ];
-            }));
-        }
-        const headerLines = [["SHA256", "Commit Message", "Timestamp"]];
-        const table = markdown_table_1.markdownTable(headerLines.concat(lines.reverse()));
+        const owner = core.getInput("owner", { required: true });
+        const repo = core.getInput("repo", { required: true });
+        const basehead = core.getInput("basehead", { required: true });
+        const shaLength = JSON.parse(core.getInput("sha-length", { required: false }));
+        const includeMergeCommits = JSON.parse(core.getInput("include-merge-commits", { required: false }));
+        const verbose = JSON.parse(core.getInput("verbose", { required: false }));
+        const lines = await generatorToArray(generateTableLines(octokit, {
+            owner,
+            repo,
+            basehead,
+            includeMergeCommits,
+            shaLength,
+        }));
+        const table = (0, markdown_table_1.markdownTable)(lines.reverse());
         if (verbose) {
-            core.startGroup("Show the markdown output"); // eslint-disable-line i18n-text/no-en
+            core.startGroup("Markdown table output"); // eslint-disable-line i18n-text/no-en
             core.info(table);
             core.endGroup();
         }
         core.setOutput("differences", table);
     }
     catch (error) {
-        core.setFailed(error.message);
+        core.setFailed(`Action failed with error: ${error}`); // eslint-disable-line i18n-text/no-en
     }
 }
 run();
