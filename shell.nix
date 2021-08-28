@@ -6,7 +6,7 @@ pkgs.mkShell {
   name = "compare-commits-action";
   buildInputs = with pkgs; [
     niv
-    nodejs
+    nodejs_latest
   ];
 
   # npm forces output that can't possibly be useful to stdout so redirect
