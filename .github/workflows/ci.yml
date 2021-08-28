@@ -39,8 +39,11 @@ jobs:
             repo: home-manager
             basehead: b0d769691cc379c9ab91d3acec5d14e75c02c02b...59be1f4983ee3689de3172716a6c7e95a6a37bb7
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test
+        uses: ./
         with:
           owner: ${{ matrix.repo.owner }}
           repo: ${{ matrix.repo.repo }}
