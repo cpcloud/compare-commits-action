@@ -28,27 +28,27 @@
   "author": "Phillip Cloud <417981+cpcloud@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1",
-    "@octokit/rest": "^18",
-    "markdown-table": "^3"
+    "@actions/core": "^1.5.0",
+    "@octokit/rest": "^18.9.1",
+    "markdown-table": "^3.0.1"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^5",
-    "@semantic-release/commit-analyzer": "^8",
-    "@semantic-release/git": "^9",
-    "@semantic-release/npm": "^7",
-    "@semantic-release/release-notes-generator": "^9",
-    "@types/eslint": "^7",
-    "@types/node": "^16",
-    "@typescript-eslint/eslint-plugin": "^4",
-    "@typescript-eslint/parser": "^4",
-    "@vercel/ncc": "^0.29",
-    "eslint": "^7",
-    "eslint-plugin-github": "^4",
-    "js-yaml": "^4",
-    "prettier": "^2",
-    "semantic-release": "^17",
-    "typescript": "4.3"
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.1.3",
+    "@semantic-release/release-notes-generator": "^9.0.3",
+    "@types/eslint": "^7.28.0",
+    "@types/node": "^16.7.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "@vercel/ncc": "^0.29.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-github": "^4.2.0",
+    "js-yaml": "^4.1.0",
+    "prettier": "2.3.2",
+    "semantic-release": "^17.4.7",
+    "typescript": "^4.3.5"
   },
   "release": {
     "branches": [
