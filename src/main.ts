@@ -56,46 +56,46 @@ async function generatorToArray<T>(generator: AsyncIterable<T>): Promise<T[]> {
 }
 
 async function run(): Promise<void> {
-  try {
-    const octokit = new Octokit({
-      auth: core.getInput("token", { required: false }),
-    });
-
-    const owner = core.getInput("owner", { required: true });
-    const repo = core.getInput("repo", { required: true });
-    const basehead = core.getInput("basehead", { required: true });
-    const shaLength: number = JSON.parse(
-      core.getInput("sha-length", { required: false })
-    );
-    const includeMergeCommits: boolean = JSON.parse(
-      core.getInput("include-merge-commits", { required: false })
-    );
-    const verbose: boolean = JSON.parse(
-      core.getInput("verbose", { required: false })
-    );
-
-    const lines = await generatorToArray(
-      generateTableLines(octokit, {
-        owner,
-        repo,
-        basehead,
-        includeMergeCommits,
-        shaLength,
-      })
-    );
-
-    const table = markdownTable(lines.reverse());
-
-    if (verbose) {
-      core.startGroup("Markdown table output"); // eslint-disable-line i18n-text/no-en
-      core.info(table);
-      core.endGroup();
-    }
-
-    core.setOutput("differences", table);
-  } catch (error) {
-    core.setFailed(`Action failed with error: ${error}`); // eslint-disable-line i18n-text/no-en
-  }
+  // try {
+  //   const octokit = new Octokit({
+  //     auth: core.getInput("token", { required: false }),
+  //   });
+  //
+  //   const owner = core.getInput("owner", { required: true });
+  //   const repo = core.getInput("repo", { required: true });
+  //   const basehead = core.getInput("basehead", { required: true });
+  //   const shaLength: number = JSON.parse(
+  //     core.getInput("sha-length", { required: false })
+  //   );
+  //   const includeMergeCommits: boolean = JSON.parse(
+  //     core.getInput("include-merge-commits", { required: false })
+  //   );
+  //   const verbose: boolean = JSON.parse(
+  //     core.getInput("verbose", { required: false })
+  //   );
+  //
+  //   const lines = await generatorToArray(
+  //     generateTableLines(octokit, {
+  //       owner,
+  //       repo,
+  //       basehead,
+  //       includeMergeCommits,
+  //       shaLength,
+  //     })
+  //   );
+  //
+  //   const table = markdownTable(lines.reverse());
+  //
+  //   if (verbose) {
+  //     core.startGroup("Markdown table output"); // eslint-disable-line i18n-text/no-en
+  //     core.info(table);
+  //     core.endGroup();
+  //   }
+  //
+  //   core.setOutput("differences", table);
+  // } catch (error) {
+  //   core.setFailed(`Action failed with error: ${error}`); // eslint-disable-line i18n-text/no-en
+  // }
 }
 
 run();
