@@ -9,7 +9,7 @@ pkgs.mkShell {
     niv
     nix-linter
     nixpkgs-fmt
-    nodejs_latest
+    nodejs
     shellcheck
     shfmt
   ];
