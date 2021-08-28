@@ -50,7 +50,6 @@ jobs:
           basehead: ${{ matrix.repo.basehead }}
           token: ${{ secrets.GITHUB_TOKEN }}
           verbose: ${{ matrix.verbose }}
-          include-merge-commits: ${{ matrix.include-merge-commits }}
   release:
     runs-on: ubuntu-latest
     concurrency: release
