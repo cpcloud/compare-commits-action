@@ -22,6 +22,9 @@ in
         enable = true;
         entry = lib.mkForce "npm run format-check";
         types_or = [ "json" "toml" "yaml" "ts" ];
+        excludes = [
+          "package-lock.json"
+        ];
       };
 
       eslint = {
