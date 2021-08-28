@@ -21,14 +21,14 @@ jobs:
       - run: npm run format-check
       - run: npm run lint
       - run: npm run package
-  test: # make sure the action works on a clean machine without building
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         verbose:
           - true
           - false
-        show_merge_commits:
+        include-merge-commits:
           - true
           - false
         repo:
@@ -47,11 +47,13 @@ jobs:
           basehead: ${{ matrix.repo.basehead }}
           token: ${{ secrets.GITHUB_TOKEN }}
           verbose: ${{ matrix.verbose }}
-          show-merge-commits: ${{ matrix.show_merge_commits }}
+          include-merge-commits: ${{ matrix.include-merge-commits }}
   release:
     runs-on: ubuntu-latest
     concurrency: release
-    needs: [build, test]
+    needs:
+      - build
+      - test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
