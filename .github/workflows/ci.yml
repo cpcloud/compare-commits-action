@@ -82,12 +82,7 @@ jobs:
         run: npm run package
 
       - name: Release
-        if: ${{ github.event_name == 'push' }}
         env:
           GIT_CREDENTIALS: ${{ secrets.SEMREL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --ci
-
-      - name: Release dry run
-        if: ${{ github.event_name != 'push' }}
-        run: npx semantic-release --dry-run --ci --branches $(git branch --show-current)
+        run: npx semantic-release
