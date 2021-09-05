@@ -2,9 +2,9 @@
 
 This action will compare the differences in a commit range and generate a Markdown table that looks like this:
 
-| SHA256                                                                                                      | Commit Message                    | Timestamp              |
-| ----------------------------------------------------------------------------------------------------------- | --------------------------------- | ---------------------- |
-| [`c049a09d`](https://github.com/nix-community/home-manager/commit/c049a09d1aa74e78d84cbb76a84a0218956650a6) | `easyeffects: add module (#2182)` | `2021-08-11 15:21:43Z` |
+| SHA256                                                                                                      | Commit Message                                                     | Pull Requests                                                                                 |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| [`59be1f49`](https://github.com/nix-community/home-manager/commit/59be1f4983ee3689de3172716a6c7e95a6a37bb7) | `dunst: add option to read alternative configuration file (#2113)` | <ul><li><a href="https://github.com/nix-community/home-manager/pull/2113">#2113</a></li></ul> |
 
 ## Usage in a GitHub workflow
 
