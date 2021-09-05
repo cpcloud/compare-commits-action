@@ -51,6 +51,10 @@ inputs:
     required: false
     description: "Print the generated Markdown table to the console"
     default: "false"
+  list-type:
+    required: false
+    description: 'The kind of HTML list to generate for associated pull requests; valid values are "ol" and "ul"'
+    default: "ul"
 ```
 
 ## Outputs

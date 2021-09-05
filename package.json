@@ -6,9 +6,9 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
+    "lint": "eslint .",
     "package": "ncc build --no-source-map-register --license licenses.txt --target es2019",
     "all": "npm run build && npm run format && npm run lint && npm run package"
   },
