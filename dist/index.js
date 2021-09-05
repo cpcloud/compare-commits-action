@@ -8757,8 +8757,8 @@ async function getPullRequestLinks(octokit, { owner, repo, commitSha }) {
     const links = [];
     for await (const { data } of octokit.paginate.iterator(octokit.rest.repos.listPullRequestsAssociatedWithCommit, { owner, repo, commit_sha: commitSha } // eslint-disable-line camelcase
     )) {
-        for (const { number, url } of data) {
-            links.push(`<a href="${url}">#${number}</a>`);
+        for (const { number, html_url: htmlUrl } of data) {
+            links.push(`<a href="${htmlUrl}">#${number}</a>`);
         }
     }
     return links;
