@@ -29,22 +29,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_CODEQL_API }}
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
           languages: ${{ matrix.language }}
-          token: ${{ secrets.GH_CODEQL_API }}
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v1
-        with:
-          token: ${{ secrets.GH_CODEQL_API }}
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
-        with:
-          token: ${{ secrets.GH_CODEQL_API }}
