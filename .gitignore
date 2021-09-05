@@ -99,3 +99,5 @@ __tests__/runner/*
 lib/**/*
 .direnv
 .pre-commit-config.yaml
+result
+result-*
