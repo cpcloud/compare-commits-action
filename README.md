@@ -38,8 +38,8 @@ inputs:
     description: "The commit range to compare"
   token:
     required: false
-    description: "Access token to increase the rate limit for GitHub API requests, recommended"
-  show-merge-commits:
+    description: "Access token to increase the rate limit for GitHub API requests"
+  include-merge-commits:
     required: false
     description: "Whether to show merge commits in the log"
     default: "false"
