@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_CODEQL_API }}
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
