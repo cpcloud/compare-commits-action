@@ -48,7 +48,7 @@ jobs:
           owner: ${{ matrix.repo.owner }}
           repo: ${{ matrix.repo.repo }}
           basehead: ${{ matrix.repo.basehead }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_API_PAT }}
           verbose: ${{ matrix.verbose }}
           include-merge-commits: ${{ matrix.include-merge-commits }}
   release:
