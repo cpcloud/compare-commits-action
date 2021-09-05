@@ -48,7 +48,7 @@ jobs:
           owner: ${{ matrix.repo.owner }}
           repo: ${{ matrix.repo.repo }}
           basehead: ${{ matrix.repo.basehead }}
-          token: ${{ secrets.GH_API_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           verbose: ${{ matrix.verbose }}
           include-merge-commits: ${{ matrix.include-merge-commits }}
   release:
@@ -84,5 +84,5 @@ jobs:
       - name: Release
         env:
           GIT_CREDENTIALS: ${{ secrets.SEMREL }}
-          GITHUB_TOKEN: ${{ secrets.GH_API_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
