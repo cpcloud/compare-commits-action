@@ -20,7 +20,7 @@ jobs:
           repo: home-manager
           basehead: A...B
           token: ${{ secrets.GITHUB_TOKEN }}
-          verbose: true  # this will print the markdown table to the console
+          verbose: true # this will print the markdown table to the console
 ```
 
 ## Inputs
