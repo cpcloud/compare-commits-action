@@ -8,34 +8,6 @@ interface CompareCommitsOptions {
   basehead: string;
   includeMergeCommits: boolean;
   shaLength: number;
-  listType: string;
-}
-
-interface PullRequestOptions {
-  owner: string;
-  repo: string;
-  commitSha: string;
-}
-
-/**
- * Generate links to pull requests associated with a commit.
- * @param octokit A GitHub API instance
- */
-async function getPullRequestLinks(
-  octokit: Octokit,
-  { owner, repo, commitSha }: PullRequestOptions
-): Promise<string[]> {
-  const links = [];
-
-  for await (const { data } of octokit.paginate.iterator(
-    octokit.rest.repos.listPullRequestsAssociatedWithCommit,
-    { owner, repo, commit_sha: commitSha } // eslint-disable-line camelcase
-  )) {
-    for (const { number, html_url: htmlUrl } of data) {
-      links.push(`<a href="${htmlUrl}">#${number}</a>`);
-    }
-  }
-  return links;
 }
 
 /**
@@ -50,7 +22,6 @@ async function generateTableLines(
     basehead,
     includeMergeCommits,
     shaLength,
-    listType,
   }: CompareCommitsOptions
 ): Promise<string[][]> {
   const lines = [];
@@ -71,26 +42,12 @@ async function generateTableLines(
         const sha = commitSha.slice(0, shaLength);
         const commitMessage = message.split("\n")[0];
 
-        const pullRequestLinks = await getPullRequestLinks(octokit, {
-          owner,
-          repo,
-          commitSha,
-        });
-
-        const pullRequestListItems = pullRequestLinks.map(
-          link => `<li>${link}</li>`
-        );
-
-        lines.push([
-          `[\`${sha}\`](${shaUrl})`,
-          `\`${commitMessage}\``,
-          `<${listType}>${pullRequestListItems.join("")}</${listType}>`,
-        ]);
+        lines.push([`[\`${sha}\`](${shaUrl})`, `\`${commitMessage}\``]);
       }
     }
   }
 
-  lines.push(["SHA256", "Commit Message", "Pull Requests"]);
+  lines.push(["SHA256", "Commit Message"]);
   return lines;
 }
 
@@ -112,7 +69,6 @@ async function run(): Promise<void> {
     const verbose: boolean = JSON.parse(
       core.getInput("verbose", { required: false })
     );
-    const listType = core.getInput("list-type", { required: false });
 
     const lines = await generateTableLines(octokit, {
       owner,
@@ -120,7 +76,6 @@ async function run(): Promise<void> {
       basehead,
       includeMergeCommits,
       shaLength,
-      listType,
     });
     const table = markdownTable(lines.reverse());
 

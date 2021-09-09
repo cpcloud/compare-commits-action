@@ -8750,24 +8750,10 @@ const core = __nccwpck_require__(2186);
 const rest_1 = __nccwpck_require__(5375);
 const markdown_table_1 = __nccwpck_require__(1062);
 /**
- * Generate links to pull requests associated with a commit.
- * @param octokit A GitHub API instance
- */
-async function getPullRequestLinks(octokit, { owner, repo, commitSha }) {
-    const links = [];
-    for await (const { data } of octokit.paginate.iterator(octokit.rest.repos.listPullRequestsAssociatedWithCommit, { owner, repo, commit_sha: commitSha } // eslint-disable-line camelcase
-    )) {
-        for (const { number, html_url: htmlUrl } of data) {
-            links.push(`<a href="${htmlUrl}">#${number}</a>`);
-        }
-    }
-    return links;
-}
-/**
  * Generate a markdown table of commits between a range
  * @param octokit A GitHub API instance
  */
-async function generateTableLines(octokit, { owner, repo, basehead, includeMergeCommits, shaLength, listType, }) {
+async function generateTableLines(octokit, { owner, repo, basehead, includeMergeCommits, shaLength, }) {
     const lines = [];
     for await (const { data: { commits }, } of octokit.paginate.iterator(octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
     { owner, repo, basehead } // eslint-disable-line indent
@@ -8776,21 +8762,11 @@ async function generateTableLines(octokit, { owner, repo, basehead, includeMerge
             if (includeMergeCommits || parents.length < 2) {
                 const sha = commitSha.slice(0, shaLength);
                 const commitMessage = message.split("\n")[0];
-                const pullRequestLinks = await getPullRequestLinks(octokit, {
-                    owner,
-                    repo,
-                    commitSha,
-                });
-                const pullRequestListItems = pullRequestLinks.map(link => `<li>${link}</li>`);
-                lines.push([
-                    `[\`${sha}\`](${shaUrl})`,
-                    `\`${commitMessage}\``,
-                    `<${listType}>${pullRequestListItems.join("")}</${listType}>`,
-                ]);
+                lines.push([`[\`${sha}\`](${shaUrl})`, `\`${commitMessage}\``]);
             }
         }
     }
-    lines.push(["SHA256", "Commit Message", "Pull Requests"]);
+    lines.push(["SHA256", "Commit Message"]);
     return lines;
 }
 async function run() {
@@ -8804,14 +8780,12 @@ async function run() {
         const shaLength = JSON.parse(core.getInput("sha-length", { required: false }));
         const includeMergeCommits = JSON.parse(core.getInput("include-merge-commits", { required: false }));
         const verbose = JSON.parse(core.getInput("verbose", { required: false }));
-        const listType = core.getInput("list-type", { required: false });
         const lines = await generateTableLines(octokit, {
             owner,
             repo,
             basehead,
             includeMergeCommits,
             shaLength,
-            listType,
         });
         const table = (0, markdown_table_1.markdownTable)(lines.reverse());
         if (verbose) {
