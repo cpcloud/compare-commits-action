@@ -11,10 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
 
-      - name: Setup NodeJS
+      - name: setup nodejs
         uses: actions/setup-node@v2
         with:
           node-version: 14
@@ -42,10 +42,10 @@ jobs:
             repo: home-manager
             basehead: b0d769691cc379c9ab91d3acec5d14e75c02c02b...59be1f4983ee3689de3172716a6c7e95a6a37bb7
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
 
-      - name: Test
+      - name: test
         uses: ./
         with:
           owner: ${{ matrix.repo.owner }}
@@ -61,31 +61,31 @@ jobs:
       - build
       - test
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup NodeJS
+      - name: setup nodejs
         uses: actions/setup-node@v2
         with:
           node-version: 14
 
-      - name: Install CI dependencies
+      - name: install ci dependencies
         run: npm ci
 
-      - name: Install runtime dependencies
+      - name: install runtime dependencies
         run: npm install
 
-      - name: Build
+      - name: build
         run: npm run build
 
-      - name: Package assets
+      - name: package assets
         run: npm run package
 
-      - name: Release
+      - name: release
+        run: npx semantic-release
         env:
           GIT_CREDENTIALS: ${{ secrets.SEMREL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
