@@ -1,5 +1,5 @@
 {
-  description = "flake-dep-info-action";
+  description = "Compare a range of commits in GitHub Actions";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
@@ -68,7 +68,7 @@
         };
 
         devShell = pkgs.mkShell {
-          name = "flake-dep-info-action";
+          name = "compare-commits-action";
           buildInputs = with pkgs; [
             fd
             git
