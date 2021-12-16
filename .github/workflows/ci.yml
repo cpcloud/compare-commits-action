@@ -7,6 +7,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -61,11 +65,18 @@ jobs:
       - build
       - test
     steps:
+      - name: Generate a GitHub token
+        uses: tibdex/github-app-token@v1
+        id: generate_token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          persist-credentials: false
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: setup nodejs
         uses: actions/setup-node@v2
@@ -87,5 +98,5 @@ jobs:
       - name: release
         run: npx semantic-release
         env:
-          GIT_CREDENTIALS: ${{ secrets.SEMREL }}
+          GIT_CREDENTIALS: ${{ steps.generate_token.outputs.token }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
