@@ -64,7 +64,6 @@ jobs:
           include-merge-commits: ${{ matrix.include-merge-commits }}
   release:
     runs-on: ubuntu-latest
-    concurrency: release
     needs:
       - build
       - test
