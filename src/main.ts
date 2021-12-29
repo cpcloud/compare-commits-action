@@ -1,5 +1,6 @@
 import * as core from "@actions/core";
 import { Octokit } from "@octokit/rest";
+import { longestRepeatedCharLength } from "./charseq";
 import { markdownTable } from "markdown-table";
 
 interface CompareCommitsOptions {
@@ -9,6 +10,8 @@ interface CompareCommitsOptions {
   includeMergeCommits: boolean;
   shaLength: number;
 }
+
+const TICK = "`";
 
 /**
  * Generate a markdown table of commits between a range
@@ -41,8 +44,13 @@ async function generateTableLines(
       if (includeMergeCommits || parents.length < 2) {
         const sha = commitSha.slice(0, shaLength);
         const commitMessage = message.split("\n")[0];
+        const numEmbeddedTicks = longestRepeatedCharLength(commitMessage, TICK);
+        const ticks = TICK.repeat(numEmbeddedTicks + 1);
 
-        lines.push([`[\`${sha}\`](${shaUrl})`, `\`${commitMessage}\``]);
+        lines.push([
+          `[${TICK}${sha}${TICK}](${shaUrl})`,
+          `${ticks}${commitMessage}${ticks}`,
+        ]);
       }
     }
   }

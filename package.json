@@ -9,8 +9,10 @@
     "format": "prettier --write .",
     "format-check": "prettier --check .",
     "lint": "eslint .",
+    "test": "jest",
+    "ts-jest": "ts-jest",
     "package": "ncc build --no-source-map-register --license licenses.txt --target es2019",
-    "all": "npm run build && npm run format-check && npm run lint && npm run package"
+    "all": "npm run build && npm run format-check && npm run lint && npm run test && npm run package"
   },
   "repository": {
     "type": "git",
@@ -39,15 +41,19 @@
     "@semantic-release/npm": "8.0.3",
     "@semantic-release/release-notes-generator": "10.0.3",
     "@types/eslint": "8.2.1",
+    "@types/jest": "^27.0.3",
     "@types/node": "16.11.17",
     "@typescript-eslint/eslint-plugin": "5.8.1",
     "@typescript-eslint/parser": "5.8.1",
     "@vercel/ncc": "0.33.1",
     "eslint": "8.5.0",
     "eslint-plugin-github": "4.3.5",
+    "jest": "^27.4.5",
     "js-yaml": "4.1.0",
     "prettier": "2.5.1",
     "semantic-release": "18.0.1",
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.4.0",
     "typescript": "4.5.4"
   },
   "release": {

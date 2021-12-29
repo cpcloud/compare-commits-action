@@ -1,6 +1,32 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 6340:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.longestRepeatedCharLength = void 0;
+function longestRepeatedCharLength(str, char) {
+    if (char.length !== 1) {
+        throw RangeError(`expected \`char\` to be length 1, got: ${char} with length ${char.length}`);
+    }
+    let n = 0;
+    for (let i = 0; i < str.length; ++i) {
+        const start = i;
+        while (str[i] === char) {
+            ++i;
+        }
+        n = Math.max(n, i - start);
+    }
+    return n;
+}
+exports.longestRepeatedCharLength = longestRepeatedCharLength;
+//# sourceMappingURL=charseq.js.map
+
+/***/ }),
+
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -8716,7 +8742,9 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __nccwpck_require__(2186);
 const rest_1 = __nccwpck_require__(5375);
+const charseq_1 = __nccwpck_require__(6340);
 const markdown_table_1 = __nccwpck_require__(4701);
+const TICK = "`";
 /**
  * Generate a markdown table of commits between a range
  * @param octokit A GitHub API instance
@@ -8730,7 +8758,12 @@ async function generateTableLines(octokit, { owner, repo, basehead, includeMerge
             if (includeMergeCommits || parents.length < 2) {
                 const sha = commitSha.slice(0, shaLength);
                 const commitMessage = message.split("\n")[0];
-                lines.push([`[\`${sha}\`](${shaUrl})`, `\`${commitMessage}\``]);
+                const numEmbeddedTicks = (0, charseq_1.longestRepeatedCharLength)(commitMessage, TICK);
+                const ticks = TICK.repeat(numEmbeddedTicks + 1);
+                lines.push([
+                    `[${TICK}${sha}${TICK}](${shaUrl})`,
+                    `${ticks}${commitMessage}${ticks}`,
+                ]);
             }
         }
     }
