@@ -48,7 +48,7 @@ async function generateTableLines(
           `[${TICK}${sha}${TICK}](${shaUrl})`,
           // spaces are here to handle embedded backticks
           // github will remove the spaces in the rendered text
-          `${TICK} ${commitMessage} ${TICK}`,
+          `${TICK}${TICK} ${commitMessage} ${TICK}${TICK}`,
         ]);
       }
     }
