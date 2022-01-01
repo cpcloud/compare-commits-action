@@ -1,6 +1,5 @@
 import * as core from "@actions/core";
 import { Octokit } from "@octokit/rest";
-import { longestRepeatedCharLength } from "./charseq";
 import { markdownTable } from "markdown-table";
 
 interface CompareCommitsOptions {
@@ -44,12 +43,12 @@ async function generateTableLines(
       if (includeMergeCommits || parents.length < 2) {
         const sha = commitSha.slice(0, shaLength);
         const commitMessage = message.split("\n")[0];
-        const numEmbeddedTicks = longestRepeatedCharLength(commitMessage, TICK);
-        const ticks = TICK.repeat(numEmbeddedTicks + 1);
 
         lines.push([
           `[${TICK}${sha}${TICK}](${shaUrl})`,
-          `${ticks}${commitMessage}${ticks}`,
+          // spaces are here to handle embedded backticks
+          // github will remove the spaces in the rendered text
+          `${TICK} ${commitMessage} ${TICK}`,
         ]);
       }
     }
