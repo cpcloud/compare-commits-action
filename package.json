@@ -10,7 +10,7 @@
     "format-check": "prettier --check .",
     "lint": "eslint .",
     "package": "ncc build --no-source-map-register --license licenses.txt --target es2019",
-    "all": "npm run build && npm run format-check && npm run lint && npm run test && npm run package"
+    "all": "npm run build && npm run format-check && npm run lint && npm run package"
   },
   "repository": {
     "type": "git",
