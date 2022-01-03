@@ -54,7 +54,7 @@ async function generateTableLines(
     }
   }
 
-  lines.push(["SHA256", "Commit Message"]);
+  lines.push(["Commit", "Message"]);
   return lines;
 }
 

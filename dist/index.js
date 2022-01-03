@@ -8740,7 +8740,7 @@ async function generateTableLines(octokit, { owner, repo, basehead, includeMerge
             }
         }
     }
-    lines.push(["SHA256", "Commit Message"]);
+    lines.push(["Commit", "Message"]);
     return lines;
 }
 async function run() {
