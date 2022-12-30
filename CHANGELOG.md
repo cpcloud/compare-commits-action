@@ -1,3 +1,10 @@
+## [5.0.27](https://github.com/cpcloud/compare-commits-action/compare/v5.0.26...v5.0.27) (2022-12-30)
+
+
+### Bug Fixes
+
+* use `GITHUB_OUTPUT` ([7d16cf4](https://github.com/cpcloud/compare-commits-action/commit/7d16cf498cf9c93f382b133a7e0d1edc918b89bd))
+
 ## [2.0.2](https://github.com/cpcloud/compare-commits-action/compare/v2.0.1...v2.0.2) (2021-08-11)
 
 
