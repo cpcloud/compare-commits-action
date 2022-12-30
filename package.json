@@ -1,6 +1,6 @@
 {
   "name": "compare-commits-action",
-  "version": "5.0.26",
+  "version": "5.0.27",
   "private": true,
   "description": "Compare the differences between two commits",
   "main": "lib/main.js",
