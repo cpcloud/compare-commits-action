@@ -1,3 +1,10 @@
+## [5.0.29](https://github.com/cpcloud/compare-commits-action/compare/v5.0.28...v5.0.29) (2023-05-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @octokit/rest to v19.0.8 ([6d27aaa](https://github.com/cpcloud/compare-commits-action/commit/6d27aaa242c247368bb73fe0edc6a0ec2bb7ea85))
+
 ## [5.0.28](https://github.com/cpcloud/compare-commits-action/compare/v5.0.27...v5.0.28) (2023-01-21)
 
 
