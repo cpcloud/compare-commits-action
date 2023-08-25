@@ -32,8 +32,8 @@
 
               prettier = {
                 enable = true;
-                entry = mkForce "${pkgs.nodejs_20}/bin/npm run format-check";
-                types_or = [ "json" "toml" "yaml" "ts" ];
+                entry = mkForce "${pkgs.nodejs_20}/bin/npm run format";
+                types_or = [ "json" "yaml" "ts" ];
                 excludes = [ "package-lock\\.json" ];
               };
 
