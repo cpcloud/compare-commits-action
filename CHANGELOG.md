@@ -1,3 +1,10 @@
+## [5.0.35](https://github.com/cpcloud/compare-commits-action/compare/v5.0.34...v5.0.35) (2023-08-25)
+
+
+### Bug Fixes
+
+* **deps:** bump to node 20 ([c048c8a](https://github.com/cpcloud/compare-commits-action/commit/c048c8a781adfd753dd6df15fafac68879177eaf))
+
 ## [5.0.34](https://github.com/cpcloud/compare-commits-action/compare/v5.0.33...v5.0.34) (2023-07-11)
 
 
