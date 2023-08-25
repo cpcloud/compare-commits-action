@@ -26,9 +26,10 @@
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
-              statix.enable = true;
               nixpkgs-fmt.enable = true;
               shellcheck.enable = true;
+              statix.enable = true;
+              taplo.enable = true;
 
               prettier = {
                 enable = true;
@@ -63,6 +64,7 @@
             shellcheck
             shfmt
             statix
+            taplo
           ];
 
           # npm forces output that can't possibly be useful to stdout so redirect
