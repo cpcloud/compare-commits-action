@@ -32,14 +32,14 @@
 
               prettier = {
                 enable = true;
-                entry = mkForce "${pkgs.nodejs}/bin/npm run format-check";
+                entry = mkForce "${pkgs.nodejs_20}/bin/npm run format-check";
                 types_or = [ "json" "toml" "yaml" "ts" ];
                 excludes = [ "package-lock\\.json" ];
               };
 
               eslint = {
                 enable = true;
-                entry = mkForce "${pkgs.nodejs}/bin/npm run lint";
+                entry = mkForce "${pkgs.nodejs_20}/bin/npm run lint";
                 types = [ "ts" ];
               };
 
@@ -59,7 +59,7 @@
             fd
             git
             nixpkgs-fmt
-            nodejs
+            nodejs_20
             shellcheck
             shfmt
             statix

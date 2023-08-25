@@ -37,7 +37,7 @@
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/npm": "9.0.2",
+    "@semantic-release/npm": "10.0.5",
     "@semantic-release/release-notes-generator": "10.0.3",
     "@types/eslint": "8.44.0",
     "@types/node": "18.16.19",
@@ -48,7 +48,7 @@
     "eslint-plugin-github": "4.8.0",
     "js-yaml": "4.1.0",
     "prettier": "2.8.8",
-    "semantic-release": "19.0.5",
+    "semantic-release": "21.1.1",
     "typescript": "5.1.6"
   },
   "release": {
