@@ -30,5 +30,5 @@ outputs:
   differences:
     description: "A markdown formatted table of differences between two commits"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
