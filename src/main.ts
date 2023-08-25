@@ -24,7 +24,7 @@ async function generateTableLines(
     basehead,
     includeMergeCommits,
     shaLength,
-  }: CompareCommitsOptions,
+  }: CompareCommitsOptions
 ): Promise<string[][]> {
   const lines = [];
 
@@ -32,7 +32,7 @@ async function generateTableLines(
     data: { commits },
   } of octokit.paginate.iterator(
     octokit.rest.repos.compareCommitsWithBasehead, // eslint-disable-line indent
-    { owner, repo, basehead }, // eslint-disable-line indent
+    { owner, repo, basehead } // eslint-disable-line indent
   )) /* eslint-disable-line indent */ {
     for (const {
       sha: commitSha,
@@ -68,13 +68,13 @@ async function run(): Promise<void> {
     const repo = core.getInput("repo", { required: true });
     const basehead = core.getInput("basehead", { required: true });
     const shaLength: number = JSON.parse(
-      core.getInput("sha-length", { required: false }),
+      core.getInput("sha-length", { required: false })
     );
     const includeMergeCommits: boolean = JSON.parse(
-      core.getInput("include-merge-commits", { required: false }),
+      core.getInput("include-merge-commits", { required: false })
     );
     const verbose: boolean = JSON.parse(
-      core.getInput("verbose", { required: false }),
+      core.getInput("verbose", { required: false })
     );
 
     const lines = await generateTableLines(octokit, {
