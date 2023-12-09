@@ -5,3 +5,4 @@ node_modules/
 CHANGELOG.md
 .direnv
 .git
+flake.lock
