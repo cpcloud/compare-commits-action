@@ -1,3 +1,10 @@
+## [5.0.40](https://github.com/cpcloud/compare-commits-action/compare/v5.0.39...v5.0.40) (2024-10-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @actions/core to v1.11.0 ([c11bd4f](https://github.com/cpcloud/compare-commits-action/commit/c11bd4ff795c826dcb8605ce972db8cf12775f06))
+
 ## [5.0.39](https://github.com/cpcloud/compare-commits-action/compare/v5.0.38...v5.0.39) (2024-05-03)
 
 
