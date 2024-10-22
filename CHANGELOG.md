@@ -1,3 +1,10 @@
+## [5.0.42](https://github.com/cpcloud/compare-commits-action/compare/v5.0.41...v5.0.42) (2024-10-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency markdown-table to v3.0.4 ([ee9030a](https://github.com/cpcloud/compare-commits-action/commit/ee9030a485610adc17707e71f89bd9900bdb5ea2))
+
 ## [5.0.41](https://github.com/cpcloud/compare-commits-action/compare/v5.0.40...v5.0.41) (2024-10-05)
 
 
